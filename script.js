@@ -1,6 +1,3 @@
-Here is the corrected `script.js` without any comments:
-
-```javascript
 let studentData = [];
 const jsonFilePath = 'students.json';
 
@@ -36,30 +33,30 @@ function fetchStudentData() {
 }
 
 function searchStudent(studentId, resultDiv) {
-    const students = studentData.filter(student => student.So_Bao_Danh === parseInt(studentId));
+    const students = studentData.filter(student => student.SBD === parseInt(studentId));
 
     if (students.length > 0) {
         let studentDetails = students.map(student => {
             return `
-                <h3>Thông tin thí sinh (Số báo danh: ${student.So_Bao_Danh}):</h3>
-                <p><strong>Tên thí sinh:</strong> ${student.Ho_Va_Ten}</p>
-                <p><strong>Ngày sinh:</strong> ${student.Ngay_Sinh}</p>
-                <p><strong>Nơi sinh:</strong> ${student.Noi_Sinh}</p>
-                <p><strong>Trường học:</strong> ${student.Truong_Hoc}</p>
-                <p><strong>Xếp hạng trường:</strong> ${student.Xep_Hang_Truong}</p>
-                <p><strong>Xếp hạng toán khối:</strong> ${student.Xep_Hang_Toan_Khoi}</p>
+                <h3>Thông tin thí sinh (Số báo danh: ${student.SBD}):</h3>
+                <p><strong>Tên thí sinh:</strong> ${student.HoVaTen}</p>
+                <p><strong>Ngày sinh:</strong> ${student.NgaySinh}</p>
+                <p><strong>Nơi sinh:</strong> ${student.NoiSinh}</p>
+                <p><strong>Trường học:</strong> ${student.TruongHoc}</p>
+                <p><strong>Xếp hạng trường:</strong> ${student.XepHangTruong}</p>
+                <p><strong>Xếp hạng toán khối:</strong> ${student.XepHangToanKhoi}</p>
                 <h3>Điểm các môn:</h3>
                 <p>
                     <strong><b>Toán:</b></strong> ${student.Toan || 'Chưa có điểm'}  
-                    <strong><b>Vật Lý:</b></strong> ${student.Vat_Ly || 'Chưa có điểm'}  
-                    <strong><b>Hóa:</b></strong> ${student.Hoa || 'Chưa có điểm'}  
-                    <strong><b>Ngữ Văn:</b></strong> ${student.Ngu_Van || 'Chưa có điểm'}  
-                    <strong><b>Lịch Sử:</b></strong> ${student.Lich_Su || 'Chưa có điểm'}  
-                    <strong><b>Địa Lí:</b></strong> ${student.Dia_Li || 'Chưa có điểm'}  
-                    <strong><b>Sinh học:</b></strong> ${student.Sinh_Hoc || 'Chưa có điểm'}  
-                    <strong><b>Tiếng Anh:</b></strong> ${student.Tieng_Anh || 'Chưa có điểm'}  
-                    <strong><b>Môn chuyên:</b></strong> ${student.Mon_Chuyen || 'Chưa có điểm'}  
-                    <strong><b>Ngoại ngữ 2:</b></strong> ${student.Ngoai_Ngu_2 || 'Chưa có điểm'}
+                    <strong><b>Vật Lý:</b></strong> ${student.VatLy || 'Chưa có điểm'}  
+                    <strong><b>Hóa:</b></strong> ${student.HoaHoc || 'Chưa có điểm'}  
+                    <strong><b>Ngữ Văn:</b></strong> ${student.NguVan || 'Chưa có điểm'}  
+                    <strong><b>Lịch Sử:</b></strong> ${student.LichSu || 'Chưa có điểm'}  
+                    <strong><b>Địa Lí:</b></strong> ${student.DiaLi || 'Chưa có điểm'}  
+                    <strong><b>Sinh học:</b></strong> ${student.SinhHoc || 'Chưa có điểm'}  
+                    <strong><b>Tiếng Anh:</b></strong> ${student.TiengAnh || 'Chưa có điểm'}  
+                    <strong><b>Môn chuyên:</b></strong> ${student.MonChuyen || 'Chưa có điểm'}  
+                    <strong><b>Ngoại ngữ 2:</b></strong> ${student.NgoaiNgu2 || 'Chưa có điểm'}
                 </p>
             `;
         }).join("");
