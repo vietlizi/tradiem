@@ -1,90 +1,56 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+const jsonFilePath = 'students.json';
 
-header {
-    background-color: #3e79c1;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
+function fetchStudentData() {
+    const studentId = document.getElementById('student_id').value;
+    const resultDiv = document.getElementById('result');
 
-header h1 {
-    margin: 0;
-    font-size: 36px;
-}
+    if (!studentId) {
+        resultDiv.innerHTML = '<div class="error">Vui lòng nhập số báo danh.</div>';
+        return;
+    }
 
-header h2 {
-    margin: 0;
-    font-size: 24px;
-}
+    resultDiv.innerHTML = '<div class="loading">Đang tải dữ liệu...</div>';
 
-.container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    fetch(jsonFilePath)
+        .then(response => response.json())
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                resultDiv.innerHTML = '<div class="error">Không có dữ liệu sinh viên.</div>';
+                return;
+            }
 
-h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-}
+            const students = data.filter(student => student.So_Bao_Danh == studentId);
 
-.form-group {
-    margin-bottom: 20px;
-}
+            if (students.length > 0) {
+                let studentDetails = students.map(student => {
+                    return `
+                        <h3>Thông tin thí sinh (Số báo danh: ${student.So_Bao_Danh}):</h3>
+                        <p><strong>Tên thí sinh:</strong> ${student.Ho_Va_Ten}</p>
+                        <p><strong>Ngày sinh:</strong> ${student.Ngay_Sinh}</p>
+                        <p><strong>Nơi sinh:</strong> ${student.Noi_Sinh}</p>
+                        <p><strong>Trường học:</strong> ${student.Truong_Hoc}</p>
+                        <p><strong>Xếp hạng trường:</strong> ${student.Xep_Hang_Truong}</p>
+                        <p><strong>Xếp hạng toán khối:</strong> ${student.Xep_Hang_Toan_Khoi}</p>
+                        <h3>Điểm các môn:</h3>
+                        <p>
+                            <strong><b>Toán:</b></strong> ${student.Toan || 'Chưa có điểm'}  
+                            <strong><b>Ngữ Văn:</b></strong> ${student.Ngu_Van || 'Chưa có điểm'}  
+                            <strong><b>Vật Lý:</b></strong> ${student.Vat_Ly || 'Chưa có điểm'}  
+                            <strong><b>Hóa:</b></strong> ${student.Hoa || 'Chưa có điểm'}  
+                            <strong><b>Sinh học:</b></strong> ${student.Sinh_Hoc || 'Chưa có điểm'}  
+                            <strong><b>Tiếng Anh:</b></strong> ${student.Tieng_Anh || 'Chưa có điểm'}  
+                            <strong><b>Môn chuyên:</b></strong> ${student.Mon_Chuyen || 'Chưa có điểm'}  
+                            <strong><b>Ngoại ngữ 2:</b></strong> ${student.Ngoai_Ngu_2 || 'Chưa có điểm'}
+                        </p>
+                    `;
+                }).join("");
 
-label {
-    font-size: 18px;
-    display: block;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #3e79c1;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #336b8a;
-}
-
-.result {
-    margin-top: 20px;
-}
-
-.error {
-    color: red;
-    font-size: 18px;
-}
-
-footer {
-    background-color: #3e79c1;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+                resultDiv.innerHTML = studentDetails;
+            } else {
+                resultDiv.innerHTML = '<div class="error">Không tìm thấy thí sinh với số báo danh này!</div>';
+            }
+        })
+        .catch(error => {
+            resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu!</div>';
+        });
 }
