@@ -1,3 +1,5 @@
+let studentData = [];
+
 const jsonFilePath = 'students.json';
 
 function fetchStudentData() {
@@ -9,29 +11,51 @@ function fetchStudentData() {
         return;
     }
 
-    fetch(jsonFilePath)
-        .then(response => response.json())
-        .then(data => {
-            const student = data.find(student => student.So_Bao_Danh == studentId);
+    if (studentData.length === 0) {
+        resultDiv.innerHTML = '<div class="loading">Đang tải dữ liệu...</div>';
+        fetch(jsonFilePath)
+            .then(response => response.json())
+            .then(data => {
+                studentData = data;
+                searchStudent(studentId, resultDiv);
+            })
+            .catch(error => {
+                resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu!</div>';
+            });
+    } else {
+        searchStudent(studentId, resultDiv);
+    }
+}
 
-            if (student) {
-                const studentDetails = `
-                    <h3>Thông tin thí sinh:</h3>
-                    <p><strong>Tên thí sinh:</strong> ${student.Ho_Va_Ten}</p>
-                    <p><strong>Ngày sinh:</strong> ${student.Ngay_Sinh}</p>
-                    <p><strong>Nơi sinh:</strong> ${student.Noi_Sinh}</p>
-                    <p><strong>Trường học:</strong> ${student.Truong_Hoc}</p>
-                    <p><strong>Xếp hạng trường:</strong> ${student.Xep_Hang_Truong}</p>
-                    <p><strong>Xếp hạng toán khối:</strong> ${student.Xep_Hang_Toan_Khoi}</p>
-                    <h3>Điểm các môn:</h3>
-                    <p><strong>Toán:</strong> ${student.Toan}   Ngữ Văn: ${student.Ngu_Van}   Vật Lý: ${student.Vat_Ly}   Hóa: ${student.Hoa}   Sinh học: ${student.Sinh_Hoc}   Tiếng Anh: ${student.Tieng_Anh}   Môn chuyên: ${student.Mon_Chuyen}   Ngoại ngữ 2: ${student.Ngoai_Ngu_2}</p>
-                `;
-                resultDiv.innerHTML = studentDetails;
-            } else {
-                resultDiv.innerHTML = '<div class="error">Không tìm thấy thí sinh với số báo danh này!</div>';
-            }
-        })
-        .catch(error => {
-            resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu!</div>';
-        });
+function searchStudent(studentId, resultDiv) {
+    const students = studentData.filter(student => student.So_Bao_Danh == studentId);
+
+    if (students.length > 0) {
+        let studentDetails = students.map(student => {
+            return `
+                <h3>Thông tin thí sinh (Số báo danh: ${student.So_Bao_Danh}):</h3>
+                <p><strong>Tên thí sinh:</strong> ${student.Ho_Va_Ten}</p>
+                <p><strong>Ngày sinh:</strong> ${student.Ngay_Sinh}</p>
+                <p><strong>Nơi sinh:</strong> ${student.Noi_Sinh}</p>
+                <p><strong>Trường học:</strong> ${student.Truong_Hoc}</p>
+                <p><strong>Xếp hạng trường:</strong> ${student.Xep_Hang_Truong}</p>
+                <p><strong>Xếp hạng toán khối:</strong> ${student.Xep_Hang_Toan_Khoi}</p>
+                <h3>Điểm các môn:</h3>
+                <p>
+                    <strong><b>Toán:</b></strong> ${student.Toan || 'Chưa có điểm'}  
+                    <strong><b>Ngữ Văn:</b></strong> ${student.Ngu_Van || 'Chưa có điểm'}  
+                    <strong><b>Vật Lý:</b></strong> ${student.Vat_Ly || 'Chưa có điểm'}  
+                    <strong><b>Hóa:</b></strong> ${student.Hoa || 'Chưa có điểm'}  
+                    <strong><b>Sinh học:</b></strong> ${student.Sinh_Hoc || 'Chưa có điểm'}  
+                    <strong><b>Tiếng Anh:</b></strong> ${student.Tieng_Anh || 'Chưa có điểm'}  
+                    <strong><b>Môn chuyên:</b></strong> ${student.Mon_Chuyen || 'Chưa có điểm'}  
+                    <strong><b>Ngoại ngữ 2:</b></strong> ${student.Ngoai_Ngu_2 || 'Chưa có điểm'}
+                </p>
+            `;
+        }).join("");
+
+        resultDiv.innerHTML = studentDetails;
+    } else {
+        resultDiv.innerHTML = '<div class="error">Không tìm thấy thí sinh với số báo danh này!</div>';
+    }
 }
