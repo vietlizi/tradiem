@@ -17,12 +17,12 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 36px;
+    font-size: 24px;
 }
 
 header h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .container {
@@ -38,7 +38,11 @@ header h2 {
 h3 {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 20px;
+}
+
+footer p {
+    font-size: 14px;
 }
 
 .form-group {
