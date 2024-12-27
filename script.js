@@ -1,5 +1,4 @@
 let studentData = [];
-
 const jsonFilePath = 'students.json';
 
 function fetchStudentData() {
@@ -14,12 +13,18 @@ function fetchStudentData() {
     if (studentData.length === 0) {
         resultDiv.innerHTML = '<div class="loading">Đang tải dữ liệu...</div>';
         fetch(jsonFilePath)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('File không tìm thấy hoặc có lỗi trong khi tải dữ liệu');
+                }
+                return response.json();
+            })
             .then(data => {
                 studentData = data;
                 searchStudent(studentId, resultDiv);
             })
             .catch(error => {
+                console.error('Fetch error: ', error); // Log the error for debugging
                 resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu!</div>';
             });
     } else {
@@ -28,7 +33,7 @@ function fetchStudentData() {
 }
 
 function searchStudent(studentId, resultDiv) {
-    const students = studentData.filter(student => student.So_Bao_Danh == studentId);
+    const students = studentData.filter(student => student.So_Bao_Danh === parseInt(studentId));
 
     if (students.length > 0) {
         let studentDetails = students.map(student => {
