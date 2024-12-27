@@ -42,14 +42,14 @@ function searchStudent(studentId, resultDiv) {
                 <p><strong>Xếp hạng toán khối:</strong> ${student.Xep_Hang_Toan_Khoi}</p>
                 <h3>Điểm các môn:</h3>
                 <p>
-                    <strong><b>Toán:</b></strong> ${student.Toan || 'Chưa có điểm'}  
-                    <strong><b>Ngữ Văn:</b></strong> ${student.Ngu_Van || 'Chưa có điểm'}  
-                    <strong><b>Vật Lý:</b></strong> ${student.Vat_Ly || 'Chưa có điểm'}  
-                    <strong><b>Hóa:</b></strong> ${student.Hoa || 'Chưa có điểm'}  
-                    <strong><b>Sinh học:</b></strong> ${student.Sinh_Hoc || 'Chưa có điểm'}  
-                    <strong><b>Tiếng Anh:</b></strong> ${student.Tieng_Anh || 'Chưa có điểm'}  
-                    <strong><b>Môn chuyên:</b></strong> ${student.Mon_Chuyen || 'Chưa có điểm'}  
-                    <strong><b>Ngoại ngữ 2:</b></strong> ${student.Ngoai_Ngu_2 || 'Chưa có điểm'}
+                    <strong><b>Toán:</b></strong> ${student["Toán"] || 'Chưa có điểm'}  
+                    <strong><b>Ngữ Văn:</b></strong> ${student["Ngữ Văn"] || 'Chưa có điểm'}  
+                    <strong><b>Vật Lý:</b></strong> ${student["Vật Lý"] || 'Chưa có điểm'}  
+                    <strong><b>Hóa:</b></strong> ${student["Hóa"] || 'Chưa có điểm'}  
+                    <strong><b>Sinh học:</b></strong> ${student["Sinh học"] || 'Chưa có điểm'}  
+                    <strong><b>Tiếng Anh:</b></strong> ${student["Tiếng Anh"] || 'Chưa có điểm'}  
+                    <strong><b>Môn chuyên:</b></strong> ${student["Mon_Chuyen"] || 'Chưa có điểm'}  
+                    <strong><b>Ngoại ngữ 2:</b></strong> ${student["Ngoai_Ngu_2"] || 'Chưa có điểm'}
                 </p>
             `;
         }).join("");
