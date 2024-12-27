@@ -24,7 +24,7 @@ function fetchStudentData() {
                 searchStudent(studentId, resultDiv);
             })
             .catch(error => {
-                console.error('Fetch error: ', error); // Log the error for debugging
+                console.error('Fetch error: ', error);
                 resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu!</div>';
             });
     } else {
