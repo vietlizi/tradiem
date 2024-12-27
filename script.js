@@ -1,5 +1,5 @@
 let studentData = [];
-const jsonFilePath = 'students.json';
+const jsonFilePath = 'students.json'; // Make sure this path is correct
 
 function fetchStudentData() {
     const studentId = document.getElementById('student_id').value;
@@ -25,7 +25,7 @@ function fetchStudentData() {
             })
             .catch(error => {
                 console.error('Fetch error: ', error);
-                resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu!</div>';
+                resultDiv.innerHTML = '<div class="error">Đã có lỗi xảy ra khi tải dữ liệu! ' + error.message + '</div>';
             });
     } else {
         searchStudent(studentId, resultDiv);
@@ -33,7 +33,7 @@ function fetchStudentData() {
 }
 
 function searchStudent(studentId, resultDiv) {
-    const students = studentData.filter(student => student.So_Bao_Danh === parseInt(studentId));
+    const students = studentData.filter(student => student.So_Bao_Danh == studentId);
 
     if (students.length > 0) {
         let studentDetails = students.map(student => {
@@ -47,14 +47,21 @@ function searchStudent(studentId, resultDiv) {
                 <p><strong>Xếp hạng toán khối:</strong> ${student.Xep_Hang_Toan_Khoi}</p>
                 <h3>Điểm các môn:</h3>
                 <p>
-                    <strong><b>Toán:</b></strong> ${student["Toán"] || 'Chưa có điểm'}  
-                    <strong><b>Ngữ Văn:</b></strong> ${student["Ngữ Văn"] || 'Chưa có điểm'}  
-                    <strong><b>Vật Lý:</b></strong> ${student["Vật Lý"] || 'Chưa có điểm'}  
-                    <strong><b>Hóa:</b></strong> ${student["Hóa"] || 'Chưa có điểm'}  
-                    <strong><b>Sinh học:</b></strong> ${student["Sinh học"] || 'Chưa có điểm'}  
-                    <strong><b>Tiếng Anh:</b></strong> ${student["Tiếng Anh"] || 'Chưa có điểm'}  
-                    <strong><b>Môn chuyên:</b></strong> ${student["Mon_Chuyen"] || 'Chưa có điểm'}  
-                    <strong><b>Ngoại ngữ 2:</b></strong> ${student["Ngoai_Ngu_2"] || 'Chưa có điểm'}
+                    <strong>Toán:</strong> ${student.Toan || 'Chưa có điểm'}  
+                    <strong>Vật Lý:</strong> ${student.Vat_Ly || 'Chưa có điểm'}  
+                    <strong>Hóa:</strong> ${student.Hoa || 'Chưa có điểm'}  
+                    <strong>Ngữ Văn:</strong> ${student.Ngu_Van || 'Chưa có điểm'}  
+                    <strong>Lịch Sử:</strong> ${student.Lich_Su || 'Chưa có điểm'}  
+                    <strong>Địa Lí:</strong> ${student.Dia_Li || 'Chưa có điểm'}  
+                    <strong>Sinh học:</strong> ${student.Sinh_Hoc || 'Chưa có điểm'}  
+                    <strong>Tiếng Anh:</strong> ${student.Tieng_Anh || 'Chưa có điểm'}  
+                    <strong>Giáo dục công dân:</strong> ${student.Giao_Duc_Cong_Dan || 'Chưa có điểm'}  
+                    <strong>Công nghệ:</strong> ${student.Cong_Nghe || 'Chưa có điểm'}  
+                    <strong>Giáo dục quốc phòng:</strong> ${student.Giao_Duc_Quoc_Phong || 'Chưa có điểm'}  
+                    <strong>Giáo dục thể chất:</strong> ${student.Giao_Duc_The_Chat || 'Chưa có điểm'}  
+                    <strong>Tin học:</strong> ${student.Tin_Hoc || 'Chưa có điểm'}  
+                    <strong>Môn chuyên:</strong> ${student.Mon_Chuyen || 'Chưa có điểm'}  
+                    <strong>Ngoại ngữ 2:</strong> ${student.Ngoai_Ngu_2 || 'Chưa có điểm'}
                 </p>
             `;
         }).join("");
